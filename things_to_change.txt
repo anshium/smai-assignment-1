@@ -1,0 +1,4 @@
+Question 1:
+1. Use of sklearn for test-train split.
+2. Randomisation at places.
+
