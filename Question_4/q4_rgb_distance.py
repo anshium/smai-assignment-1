@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 from scipy.spatial import distance
 
-class SLIC:
+class SLIC_RGB:
     def __init__(self, image, num_segments, compactness):
         self.image = image
 
@@ -96,9 +96,9 @@ class SLIC:
             new_center = [
                 np.mean(points[:, 1]),  # x-coordinate
                 np.mean(points[:, 0]),  # y-coordinate
-                np.mean(colors[:, 0]),  # Red channel
-                np.mean(colors[:, 1]),  # Green channel
-                np.mean(colors[:, 2]),  # Blue channel
+                np.mean(colors[:, 0]),  # R channel
+                np.mean(colors[:, 1]),  # G channel
+                np.mean(colors[:, 2]),  # B channel
             ]
             new_clusters.append(new_center)
         self.clusters = new_clusters
@@ -115,10 +115,9 @@ class SLIC:
     
             self.update_centers()
 
-            # Compute residual error
             residual_error = np.linalg.norm(prev_clusters - np.array(self.clusters))
-            # if residual_error < threshold:
-            #     break
+            if residual_error < threshold:
+                break
 
         self.enforce_connectivity()
 
@@ -131,14 +130,14 @@ class SLIC:
 
 if __name__ == "__main__":
     # image = cv2.imread("data/frame_0000.jpg")
-    image = cv2.imread("/home/anshium/workspace/courses/smai/smai-assignment-1/Question_5/more_images/SLIC/2.jpg")
+    image = cv2.imread("/home/anshium/workspace/courses/smai/smai-assignment-1/Question_5/more_images/2.jpg")
     # image = cv2.imread("/home/anshium/Pictures/wallpapers/Fantasy-Lake2.png")
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    slic = SLIC(image, num_segments=100, compactness=20.0)
+    slic = SLIC_RGB(image, num_segments=100, compactness=20.0)
 
     slic.iterate()
     segmentation = slic.get_segmentation()
 
-    segmentation_bgr = cv2.cvtColor(segmentation, cv2.COLOR_LAB2BGR)
+    segmentation_bgr = cv2.cvtColor(segmentation, cv2.COLOR_RGB2BGR)
     cv2.imwrite("segmentation.jpg", segmentation_bgr)
