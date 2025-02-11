@@ -129,8 +129,8 @@ class SLIC_RGB:
 
 
 if __name__ == "__main__":
-    # image = cv2.imread("data/frame_0000.jpg")
-    image = cv2.imread("/home/anshium/workspace/courses/smai/smai-assignment-1/Question_5/more_images/2.jpg")
+    image = cv2.imread("data/frame_0000.jpg")
+    # image = cv2.imread("/home/anshium/workspace/courses/smai/smai-assignment-1/Question_5/more_images/2.jpg")
     # image = cv2.imread("/home/anshium/Pictures/wallpapers/Fantasy-Lake2.png")
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
