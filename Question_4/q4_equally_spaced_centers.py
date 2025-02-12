@@ -3,7 +3,7 @@ import cv2
 from scipy.spatial import distance
 
 class SLIC:
-    def __init__(self, image, num_segments, compactness):
+    def __init__(self, image, num_segments, compactness, keep_images = False):
         self.image = image
 
         self.num_segments = num_segments
@@ -19,6 +19,9 @@ class SLIC:
         self.labels = -1 * np.ones((self.height, self.width), dtype=np.int32)
         
         self.distances = np.full((self.height, self.width), np.inf)
+
+        self.keep_images = keep_images
+        self.images = None
 
     def initialize_clusters(self):
         for y in range(self.S // 2, self.height, self.S):
@@ -111,10 +114,17 @@ class SLIC:
     
             self.update_centers()
 
+            if self.keep_images:
+                segmentation = slic.get_segmentation()
+                segmentation_bgr = cv2.cvtColor(segmentation, cv2.COLOR_LAB2BGR)
+                cv2.imwrite(f"iters/segmentation{_}.jpg", segmentation_bgr)
+
+
             # Compute residual error
             residual_error = np.linalg.norm(prev_clusters - np.array(self.clusters))
-            # if residual_error < threshold:
-            #     break
+            if residual_error < threshold:
+                break
+
 
         self.enforce_connectivity()
 
