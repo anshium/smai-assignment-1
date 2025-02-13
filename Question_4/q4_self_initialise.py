@@ -23,6 +23,8 @@ class SLIC_SELF_INITIALISE:
         self.keep_images = keep_images
         self.images = None
 
+        self.num_iters = 0
+
     def initialize_clusters(self):
         for y in range(self.S // 2, self.height, self.S):
             for x in range(self.S // 2, self.width, self.S):
@@ -105,10 +107,13 @@ class SLIC_SELF_INITIALISE:
     def enforce_connectivity(self):
         pass
 
-    def iterate(self, max_iter=50, threshold=0.01):
+    def iterate(self, max_iter=50, threshold=0.5):
         # self.initialize_clusters()
 
+
         for _ in range(max_iter):
+            self.num_iters += 1
+            
             prev_clusters = np.array(self.clusters)
             self.update_clusters_vectorised()
     
@@ -122,6 +127,7 @@ class SLIC_SELF_INITIALISE:
 
             # Compute residual error
             residual_error = np.linalg.norm(prev_clusters - np.array(self.clusters))
+            print(residual_error)
             if residual_error < threshold:
                 break
 

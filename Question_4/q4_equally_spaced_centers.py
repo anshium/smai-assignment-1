@@ -23,6 +23,8 @@ class SLIC:
         self.keep_images = keep_images
         self.images = None
 
+        self.num_iters = 0
+
     def initialize_clusters(self):
         for y in range(self.S // 2, self.height, self.S):
             for x in range(self.S // 2, self.width, self.S):
@@ -108,7 +110,12 @@ class SLIC:
     def iterate(self, max_iter=50, threshold=0.01):
         self.initialize_clusters()
 
+
+
         for _ in range(max_iter):
+            
+            self.num_iters += 1
+            
             prev_clusters = np.array(self.clusters)
             self.update_clusters_vectorised()
     
@@ -120,8 +127,10 @@ class SLIC:
                 cv2.imwrite(f"iters/segmentation{_}.jpg", segmentation_bgr)
 
 
-            # Compute residual error
+            # compute residual error
             residual_error = np.linalg.norm(prev_clusters - np.array(self.clusters))
+            # print(residual_error) 
+
             if residual_error < threshold:
                 break
 
@@ -136,8 +145,8 @@ class SLIC:
 
 
 if __name__ == "__main__":
-    # image = cv2.imread("data/frame_0000.jpg")
-    image = cv2.imread("/home/anshium/workspace/courses/smai/smai-assignment-1/Question_5/more_images/SLIC/2.jpg")
+    image = cv2.imread("data/frame_0000.jpg")
+    # image = cv2.imread("/home/anshium/workspace/courses/smai/smai-assignment-1/Question_5/more_images/SLIC/2.jpg")
     # image = cv2.imread("/home/anshium/Pictures/wallpapers/Fantasy-Lake2.png")
     image = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
 
@@ -146,6 +155,7 @@ if __name__ == "__main__":
     slic.iterate()
     segmentation = slic.get_segmentation()
 
-    # Convert LAB back to BGR and save
+    print(slic.num_iters)
+
     segmentation_bgr = cv2.cvtColor(segmentation, cv2.COLOR_LAB2BGR)
     cv2.imwrite("segmentation.jpg", segmentation_bgr)
