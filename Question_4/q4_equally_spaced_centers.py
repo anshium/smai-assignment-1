@@ -122,7 +122,7 @@ class SLIC:
             self.update_centers()
 
             if self.keep_images:
-                segmentation = slic.get_segmentation()
+                segmentation = self.get_segmentation()
                 segmentation_bgr = cv2.cvtColor(segmentation, cv2.COLOR_LAB2BGR)
                 cv2.imwrite(f"iters/segmentation{_}.jpg", segmentation_bgr)
 
