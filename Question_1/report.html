@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Gradient Descent Algorithms&colon; Differences&comma; Advantages&comma; and Disadvantages</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="gradient-descent-algorithms-differences-advantages-and-disadvantages">Gradient Descent Algorithms: Differences, Advantages, and Disadvantages</h1>
+<p>Gradient descent is an optimization algorithm used to minimize a function by iteratively moving in the direction of the steepest descent. There are three main types:</p>
+<h3 id="1-batch-gradient-descent">1. <strong>Batch Gradient Descent</strong></h3>
+<ul>
+<li><strong>Description</strong>: Uses the entire dataset to compute the gradient at each step.</li>
+<li><strong>Advantages</strong>: More stable updates, converges smoothly.</li>
+<li><strong>Disadvantages</strong>: Computationally expensive for large datasets.</li>
+</ul>
+<h3 id="2-stochastic-gradient-descent-sgd">2. <strong>Stochastic Gradient Descent (SGD)</strong></h3>
+<ul>
+<li><strong>Description</strong>: Updates model parameters after each training example.</li>
+<li><strong>Advantages</strong>: Faster updates, can escape local minima.</li>
+<li><strong>Disadvantages</strong>: More variance in updates, may not converge smoothly.</li>
+</ul>
+<h3 id="3-mini-batch-gradient-descent">3. <strong>Mini-Batch Gradient Descent</strong></h3>
+<ul>
+<li><strong>Description</strong>: Uses a small batch of data points to compute gradients at each step.</li>
+<li><strong>Advantages</strong>: Balance between stability (Batch GD) and speed (SGD).</li>
+<li><strong>Disadvantages</strong>: Requires tuning batch size for optimal performance.</li>
+</ul>
+<hr>
+<h2 id="fastest-converging-gradient-descent-method">Fastest Converging Gradient Descent Method</h2>
+<p>Among the three, <strong>Mini-Batch Gradient Descent</strong> often converges the fastest because:</p>
+<ul>
+<li>It benefits from vectorized computations (efficient use of hardware).</li>
+<li>It reduces variance compared to SGD, leading to more stable convergence.</li>
+<li>It is faster than Batch Gradient Descent since it processes smaller subsets of data.</li>
+</ul>
+<h2 id="however-i-observed-that-stochastic-gradient-descent-is-also-fast-enough">However, I observed that Stochastic Gradient Descent is also fast enough.</h2>
+<h2 id="effect-of-lasso-and-ridge-regularization-on-the-model">Effect of Lasso and Ridge Regularization on the Model</h2>
+<p>Regularization techniques like <strong>Lasso (L1)</strong> and <strong>Ridge (L2)</strong> help prevent overfitting by adding penalties to large coefficients:</p>
+<ul>
+<li><strong>Lasso (L1 Regularization)</strong>: Drives some coefficients to exactly zero, performing feature selection.</li>
+<li><strong>Ridge (L2 Regularization)</strong>: Shrinks coefficients but does not eliminate them, making the model more stable.</li>
+<li><strong>Optimal Lambda</strong>: The best λ (lambda) based on test performance was around <strong>0.1</strong> for both Lasso and Ridge.</li>
+</ul>
+<hr>
+<h2 id="effect-of-feature-scaling-on-model-performance">Effect of Feature Scaling on Model Performance</h2>
+<p>Feature scaling ensures that all input features contribute equally to the model's learning process. Without scaling:</p>
+<ul>
+<li>Gradient descent may converge very slowly due to inconsistent feature magnitudes.</li>
+<li>Regularization penalties (Lasso/Ridge) may be disproportionately applied.</li>
+</ul>
+<p>Standardization (zero mean, unit variance) or normalization (scaling between 0 and 1) significantly improves model performance by stabilizing weight updates.</p>
+<img src = "plot.png">
+<p>The features that have almost zero values:</p>
+<ol>
+<li>Time of the day Morning. (for all three nearly)</li>
+<li>Time of the day Evening. (for all except ridge)</li>
+<li>Traffic Level (for all three nearly)</li>
+</ol>
+
+            
+            
+        </body>
+        </html>
