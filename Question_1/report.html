@@ -1,8 +1,8 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
         <html>
         <head>
             <meta charset="UTF-8">
-            <title>Gradient Descent Algorithms&colon; Differences&comma; Advantages&comma; and Disadvantages</title>
+            <title>Question 1&colon;</title>
             <style>
 /* From extension vscode.github */
 /*---------------------------------------------------------------------------------------------
@@ -138,30 +138,31 @@
         
         </head>
         <body class="vscode-body vscode-light">
-            <h1 id="gradient-descent-algorithms-differences-advantages-and-disadvantages">Gradient Descent Algorithms: Differences, Advantages, and Disadvantages</h1>
+            <h1 id="question-1">Question 1:</h1>
+<h2 id="gradient-descent-algorithms-differences-advantages-and-disadvantages">Gradient Descent Algorithms: Differences, Advantages, and Disadvantages</h2>
 <p>Gradient descent is an optimization algorithm used to minimize a function by iteratively moving in the direction of the steepest descent. There are three main types:</p>
-<h3 id="1-batch-gradient-descent">1. <strong>Batch Gradient Descent</strong></h3>
+<h4 id="1-batch-gradient-descent">1. <strong>Batch Gradient Descent</strong></h4>
 <ul>
 <li><strong>Description</strong>: Uses the entire dataset to compute the gradient at each step.</li>
 <li><strong>Advantages</strong>: More stable updates, converges smoothly.</li>
 <li><strong>Disadvantages</strong>: Computationally expensive for large datasets.</li>
 </ul>
-<h3 id="2-stochastic-gradient-descent-sgd">2. <strong>Stochastic Gradient Descent (SGD)</strong></h3>
+<h4 id="2-stochastic-gradient-descent-sgd">2. <strong>Stochastic Gradient Descent (SGD)</strong></h4>
 <ul>
 <li><strong>Description</strong>: Updates model parameters after each training example.</li>
 <li><strong>Advantages</strong>: Faster updates, can escape local minima.</li>
 <li><strong>Disadvantages</strong>: More variance in updates, may not converge smoothly.</li>
 </ul>
-<h3 id="3-mini-batch-gradient-descent">3. <strong>Mini-Batch Gradient Descent</strong></h3>
+<h4 id="3-mini-batch-gradient-descent">3. <strong>Mini-Batch Gradient Descent</strong></h4>
 <ul>
 <li><strong>Description</strong>: Uses a small batch of data points to compute gradients at each step.</li>
 <li><strong>Advantages</strong>: Balance between stability (Batch GD) and speed (SGD).</li>
 <li><strong>Disadvantages</strong>: Requires tuning batch size for optimal performance.</li>
 </ul>
 <hr>
-<h2 id="fastest-converging-gradient-descent-method">Fastest Converging Gradient Descent Method</h2>
+<h3 id="fastest-converging-gradient-descent-method">Fastest Converging Gradient Descent Method</h3>
 <h2 id="stochastic-gradient-descent-is-fast">Stochastic Gradient Descent is fast!</h2>
-<h2 id="effect-of-lasso-and-ridge-regularization-on-the-model">Effect of Lasso and Ridge Regularization on the Model</h2>
+<h3 id="effect-of-lasso-and-ridge-regularization-on-the-model">Effect of Lasso and Ridge Regularization on the Model</h3>
 <p>Regularization techniques like <strong>Lasso (L1)</strong> and <strong>Ridge (L2)</strong> help prevent overfitting by adding penalties to large coefficients:</p>
 <ul>
 <li><strong>Lasso (L1 Regularization)</strong>: Drives some coefficients to exactly zero, performing feature selection.</li>
@@ -169,7 +170,7 @@
 <li><strong>Optimal Lambda</strong>: The best λ (lambda) based on test performance was around <strong>0.1</strong> for both Lasso and Ridge.</li>
 </ul>
 <hr>
-<h2 id="effect-of-feature-scaling-on-model-performance">Effect of Feature Scaling on Model Performance</h2>
+<h3 id="effect-of-feature-scaling-on-model-performance">Effect of Feature Scaling on Model Performance</h3>
 <p>Feature scaling ensures that all input features contribute equally to the model's learning process. Without scaling:</p>
 <ul>
 <li>Gradient descent may converge very slowly due to inconsistent feature magnitudes.</li>
@@ -183,6 +184,128 @@
 <li>Time of the day Evening. (for all except ridge)</li>
 <li>Traffic Level (for all three nearly)</li>
 </ol>
+<h1 id="question-2">Question 2</h1>
+<h2 id="section-31-normal-knn">Section 3.1 (Normal KNN)</h2>
+<p><code>Task 1:</code> Classification</p>
+<p><strong>Accuracy for three different values of k:</strong></p>
+<p><code>Accuracy for k = 1:</code> 90.48 %</p>
+<p><code>Accuracy for k = 5:</code> 91.9 %</p>
+<p><code>Accuracy for k = 10:</code> 92.07 %</p>
+<p><strong>Accuracy when text embeddings are used:</strong></p>
+<p>Accuracy = 87.81 %</p>
+<p><code>Task 1:</code> Retrieval</p>
+<p>Part A:</p>
+<ul>
+<li><code>Mean Reciprocal Rank:</code> 1.0</li>
+<li><code>Precision@100:</code> 0.05</li>
+<li><code>Hit Rate:</code> 1.0</li>
+</ul>
+<p>Part B: Image to Image Retrieval:</p>
+<ul>
+<li><code>Mean Reciprocal Rank:</code> 0.1935</li>
+<li><code>Precision@100:</code> 0.018963</li>
+<li><code>Hit Rate:</code> 0.9017</li>
+</ul>
+<h2 id="section-32-locally-sensitive-hashing">Section 3.2 (Locally Sensitive Hashing)</h2>
+<p>Frequency of Samples in Each Bucket:</p>
+<img src = "freq_image_lsh.png">
+<p>Problems I notice here:</p>
+<p>I notice the problem that some buckets get a very large number of hyperplanes.</p>
+<p>For Image to Image Retrieval:</p>
+<ul>
+<li><code>Accuracy</code>: 89.99000000000001 %</li>
+<li><code>Mean Reciprocal Rank</code>: 0.8999</li>
+<li><code>Precision at k</code>: 0.04656300000000001</li>
+<li><code>Hit Rate</code>: 0.9619</li>
+</ul>
+<p>How do these metrics change, on changing the number of hyperplanes, mention possible reasons for these.</p>
+<p>Increasing the Number of Hyperplanes</p>
+<p><code>Accuracy</code> increases because finer partitions reduce false positives. However, if too many hyperplanes are used, accuracy plateaus or slightly decreases due to over-segmentation.</p>
+<p><code>Mean Reciprocal Rank</code> improves as finer partitioning helps rank the correct results higher.</p>
+<p><code>Precision at k</code> improves since fewer irrelevant results are retrieved.</p>
+<p><code>Hit Rate</code> decreases because smaller hash buckets reduce recall, making relevant items less likely to be retrieved.</p>
+<p>Decreasing the Number of Hyperplanes</p>
+<p><code>Accuracy</code> decreases because fewer partitions increase false positives.</p>
+<p><code>Mean Reciprocal Rank</code> decreases as incorrect items appear higher in rankings.</p>
+<p><code>Precision at k</code> decreases because more irrelevant results are retrieved.</p>
+<p><code>Hit Rate</code> increases as larger hash buckets improve recall, making relevant items more likely to be retrieved.</p>
+<p>Reasons for These Changes</p>
+<p><code>More Hyperplanes → Higher Precision, Lower Recall</code></p>
+<p>More partitions create smaller hash buckets, reducing false positives but increasing false negatives.</p>
+<p><code>Fewer Hyperplanes → Higher Recall, Lower Precision</code></p>
+<p>Fewer partitions create larger hash buckets, increasing false positives but ensuring relevant items are included.</p>
+<h2 id="section-33-inverted-file-index">Section 3.3 Inverted File Index</h2>
+<img src = "points_per_cluster.png">
+<p>Statistics:</p>
+<ul>
+<li>IVF (nprobe=<code>1</code>): <code>MRR</code> = 0.9266, <code>Precision@100</code> = 0.8354, <code>Hit Rate</code> = 0.9985, <code>Avg Comparisons</code> = 5329.18</li>
+<li>IVF (nprobe=<code>2</code>): <code>MRR</code> = 0.9337, <code>Precision@100</code> = 0.8406, <code>Hit Rate</code> = 0.9991, <code>Avg Comparisons</code> = 10765.04</li>
+<li>IVF (nprobe=<code>5</code>): <code>MRR</code> = 0.9347, <code>Precision@100</code> = 0.8412, <code>Hit Rate</code> = 0.9995, <code>Avg Comparisons</code> = 26092.39</li>
+<li>IVF (nprobe=<code>10</code>): <code>MRR</code> = 0.9348, <code>Precision@100</code> = 0.8411, <code>Hit Rate</code> = 0.9996, <code>Avg Comparisons</code> = 50000.00</li>
+</ul>
+<img src = "avg_comp_vs_nprobe.png">
+<h2 id="section-34-analysis">Section 3.4: Analysis</h2>
+<p>Comparision of metrics: (both parts together)</p>
+<p>IVF:</p>
+<p>IVF (nprobe=1): MRR = 0.9266, Precision@100 = 0.8354, Hit Rate = 0.9985, Avg Comparisons = 5329.18</p>
+<p>IVF (nprobe=2): MRR = 0.9337, Precision@100 = 0.8406, Hit Rate = 0.9991, Avg Comparisons = 10765.04</p>
+<p>IVF (nprobe=5): MRR = 0.9347, Precision@100 = 0.8412, Hit Rate = 0.9995, Avg Comparisons = 26092.39</p>
+<p>IVF (nprobe=10): MRR = 0.9348, Precision@100 = 0.8411, Hit Rate = 0.9996, Avg Comparisons = 50000.00</p>
+<hr>
+<p>LSH: (for full train set at hyperplanes = 7)</p>
+<p>Accuracy: 89.99000000000001 %
+Mean Reciprocal Rank: 0.8999
+Precision at k: 0.04656300000000001
+Hit Rate: 0.9619</p>
+<hr>
+<p>Simple k-means</p>
+<p>Mean Reciprocal Rank: 0.1935
+Precision@100: 0.018963
+Hit Rate: 0.9017</p>
+<h1 id="question-3">Question 3</h1>
+<h2 id="section-41-preprocessing-and-exploratory-data-analysis">Section 4.1: Preprocessing and Exploratory Data Analysis</h2>
+<h3 id="correlation-matrix-for-the-12-features---excluding-flag-and-address">Correlation matrix for the 12 features - excluding FLAG and Address</h3>
+<img src = "fc_1.png">
+<h3 id="correlation-matrix-for-the-13-features---excluding-address">Correlation matrix for the 13 features - excluding Address</h3>
+<img src = "fc_2.png">
+<h3 id="violin-plots-for-data">Violin Plots for Data</h3>
+<img src = "violin_plots_q3.png">
+<h3 id="accuracies">Accuracies:</h3>
+<p>Own Implementation:</p>
+<p>Decision Tree Test Accuracy: <code>0.8777817025785941</code></p>
+<p>Scikit Learn:</p>
+<p>Scikit-Learn Decision Test Accuracy: <code>0.8784881667255386</code></p>
+<h3 id="hyperparameter-tuning-results">Hyperparameter tuning Results</h3>
+<ul>
+<li>{'criterion': 'gini', 'max_depth': 10, 'min_samples_split': 5, 'accuracy': 0.891832229580574}</li>
+<li>{'criterion': 'gini', 'max_depth': 10, 'min_samples_split': 20, 'accuracy': 0.891832229580574}</li>
+<li>{'criterion': 'gini', 'max_depth': None, 'min_samples_split': 5, 'accuracy': 0.8847682119205298}</li>
+<li>{'criterion': 'gini', 'max_depth': None, 'min_samples_split': 20, 'accuracy': 0.8874172185430463}</li>
+</ul>
+<p>Best Parameters:</p>
+<p><code>Max Depth</code>: 10 / 11, <code>Min elements</code>: 3</p>
+<p><code>Max Depth</code>: 10, <code>Min elements</code>: 6</p>
+<h3 id="feature-importances">Feature importances</h3>
+<img src = "feature_importances.png">
+<h3 id="tree-visualisation">Tree Visualisation</h3>
+<img src = "tree_viz.png">
+<h1 id="question-4">Question 4:</h1>
+<p>&lt;img src = &quot;segmented_image.png&gt;</p>
+<h3 id="for-different-values-parameters">For different Values (parameters):</h3>
+<img src = "seg_image_diff_params.png">
+<h3 id="image-displayed-after-every-iteration">Image displayed after every iteration</h3>
+<img src = "after_every_iteration.png">
+<h3 id="slic-rgb">SLIC RGB</h3>
+<img src = "slic_rgb.png">
+<h3 id="video-optimisation">Video Optimisation</h3>
+<p>The previously computed clusters were used.</p>
+<h3 id="statistics">Statistics</h3>
+<p>Without optimisation:</p>
+<p>Iterations taken (frame_wise): [32, 29, 30, 29, 25, 33, 26, 30, 23, 39, 36]
+Average iterations: 30.181818181818183</p>
+<p>With optimisation (2nd frame and onwards):</p>
+<p>Iterations Taken: [18, 15, 9, 8, 12, 8, 12, 7, 16, 9]</p>
+<img src = "slic_iters_video.png">
 
             
             
