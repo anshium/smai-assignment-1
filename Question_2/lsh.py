@@ -23,23 +23,18 @@ class LSH:
         self.buckets[hash_key].append(index)
 
     def query(self, query_vec, top_k=5):
-        # Hash the query vector
         hash_key = self.hash_vector(query_vec)
         
-        # Get the potential candidates from the same bucket
         candidates = self.buckets.get(hash_key, [])
         
         if len(candidates) == 0:
             return [], []
 
-        # Compute the distances between the query vector and candidate vectors
         candidate_vectors = train_embeddings[candidates]  # Assuming train_embeddings is available
         distances = cdist([query_vec], candidate_vectors, metric='euclidean').flatten()
         
-        # Get the indices of the top_k closest candidates
         top_k_indices = np.argsort(distances)[:top_k]
         
-        # Return the top_k closest indices and their corresponding distances
         return [candidates[i] for i in top_k_indices], distances[top_k_indices]
 
 
@@ -50,16 +45,14 @@ test_labels = torch.load("data/test_labels.pth").cpu().numpy()
 
 n, d = train_embeddings.shape
 
-query_vector = test_embeddings[0]  # Use the first test embedding as an example query
+query_vector = test_embeddings[0]
 
-num_hyperplanes = 7  # Choose the number of hyperplanes
+num_hyperplanes = 7
 lsh = LSH(num_hyperplanes, d)
 
-# Insert train embeddings
 for idx, vec in tqdm(enumerate(train_embeddings), total = n, desc=f"LSH {num_hyperplanes}"):
     lsh.insert(vec, idx)
 
-# Query the LSH structure
 top_k_indices, top_k_distances = lsh.query(query_vector, top_k=5)
 
 print("Top-5 closest vectors to the query:")
@@ -78,7 +71,6 @@ train_labels = torch.load("data/train_labels.pth").cpu().numpy()
 
 def get_label_predictions(knn_values):
 
-    # index_to_labels = train_labels[knn_values]
     index_to_labels = train_labels[knn_values]
 
     mapped = labels_semantics[np.array(index_to_labels)]
@@ -88,7 +80,6 @@ def get_label_predictions(knn_values):
 
     most_common_labels = [Counter(np.array(row).flatten()).most_common(1)[0][0] for row in mapped]
     
-    # print("mcl", most_common_labels)
     return np.array(most_common_labels)
 
 print(top_k_indices)
@@ -115,9 +106,9 @@ for test_embedding in tqdm(test_embeddings[:total]):
 def mean_reciprocal_rank(results, ground_truth):
     ranks = []
     for i, res in enumerate(results):
-        rank = np.where(np.isin(res, ground_truth[i]))[0]  # Find ranks of correct matches
+        rank = np.where(np.isin(res, ground_truth[i]))[0]
         if len(rank) > 0:
-            ranks.append(1 / (rank[0] + 1))  # Take the first correct match
+            ranks.append(1 / (rank[0] + 1))
         else:
             ranks.append(0)
     return np.mean(ranks)
@@ -148,35 +139,3 @@ print("Accuracy:", acc * 100, "%")
 print("Mean Reciprocal Rank:", mrr)
 print("Precision at k:", pak)
 print("Hit Rate:", hr)
-
-
-
-# def take_mode
-
-# n, d = train_embeddings.shape
-# num_hyperplanes_list = [5, 10, 20, 50]
-
-# # Create subplots for better visualization
-# fig, axes = plt.subplots(2, 2, figsize=(12, 8))  # 2x2 grid of subplots
-# axes = axes.flatten()  # Flatten for easier indexing
-
-# for i, num_hyperplanes in enumerate(num_hyperplanes_list):
-#     lsh = LSH(num_hyperplanes, d)
-
-#     print(f"Inserting vectors with {num_hyperplanes} hyperplanes...")
-#     for idx, vec in tqdm(enumerate(train_embeddings), total=n, desc=f"LSH {num_hyperplanes}"):
-#         lsh.insert(vec, idx)
-
-#     bucket_sizes = [len(v) for v in lsh.buckets.values()]
-
-#     # Plot in corresponding subplot
-#     ax = axes[i]
-#     ax.hist(bucket_sizes, bins=20, alpha=0.7, label=f'{num_hyperplanes} hyperplanes')
-#     ax.set_yscale("log")  # Log scale for better visibility
-#     ax.set_title(f"LSH with {num_hyperplanes} Hyperplanes")
-#     ax.set_xlabel("Bucket Size")
-#     ax.set_ylabel("Frequency")
-#     ax.legend()
-
-# plt.tight_layout()
-# plt.show()
